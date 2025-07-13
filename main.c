@@ -13,7 +13,6 @@
 #include <sys/timerfd.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <pty.h>
 
 #include <xkbcommon/xkbcommon-compose.h>
 #include <wayland-client-core.h>
@@ -21,9 +20,20 @@
 #include <wayland-cursor.h>
 
 #include "tsm/libtsm.h"
-#include "xdg-shell.h"
-#include "primary-selection-unstable-v1.h"
-#include "xdg-decoration-unstable-v1.h"
+#include "xdg-shell-client-protocol.h"
+#include "primary-selection-unstable-v1-client-protocol.h"
+#include "xdg-decoration-unstable-v1-client-protocol.h"
+
+#if __APPLE__
+struct itimerspec {
+    struct timespec  it_interval;  /* Interval for periodic timer */
+    struct timespec  it_value;     /* Initial expiration */
+};
+#include <sys/ioctl.h>
+#include <util.h>
+#else
+#include <pty.h>
+#endif
 
 #define ARRAY_LENGTH(a) (sizeof (a) / sizeof (a)[0])
 

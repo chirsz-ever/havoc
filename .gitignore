@@ -4,3 +4,5 @@ xdg-shell.[ch]
 xdg-decoration-unstable-v1.[ch]
 primary-selection-unstable-v1.[ch]
 havoc
+/build
+.cache/
